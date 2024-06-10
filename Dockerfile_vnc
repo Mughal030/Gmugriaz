@@ -1,0 +1,8 @@
+FROM kalilinux/kali-rolling
+
+# Install necessary packages including VNC server
+RUN apt-get update && apt-get install -y \
+    tightvncserver \
+    novnc \
+    websockify \
+    && apt-get clean
