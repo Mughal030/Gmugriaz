@@ -1,10 +1,11 @@
 image:
-  file: Dockerfile
+  file: .gitpod.Dockerfile
 
 tasks:
-  - command: echo "Welcome to your Kali Linux Gitpod workspace!"
+  - init: echo "Initialization completed"
   - command: |
-      vncserver :1
+      echo "Welcome to your Kali Linux Gitpod workspace!"
+      ~/start_vnc.sh
       websockify -D --web=/usr/share/novnc/ 6080 localhost:5901
 
 ports:
@@ -12,3 +13,7 @@ ports:
     onOpen: open-preview
   - port: 6080
     onOpen: open-preview
+
+vscode:
+  extensions:
+    - ms-vscode.cpptools
