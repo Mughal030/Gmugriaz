@@ -1,7 +1,11 @@
 FROM kalilinux/kali-rolling
 
-# Install necessary packages
+# Set environment variables to avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install necessary packages including debconf-utils for preconfiguration
 RUN apt-get update && apt-get install -y \
+    debconf-utils \
     kali-linux-default \
     kali-tools-top10 \
     kali-linux-headless \
@@ -9,6 +13,10 @@ RUN apt-get update && apt-get install -y \
     novnc \
     websockify \
     && apt-get clean
+
+# Preconfigure the keyboard layout to "English (UK)"
+RUN echo "keyboard-configuration keyboard-configuration/layout select English (UK)" | debconf-set-selections
+RUN echo "keyboard-configuration keyboard-configuration/variant select English (UK)" | debconf-set-selections
 
 # Set the locale
 ENV LANG C.UTF-8
