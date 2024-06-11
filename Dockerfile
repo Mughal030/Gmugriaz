@@ -12,11 +12,15 @@ RUN apt-get update && apt-get install -y \
     tightvncserver \
     novnc \
     websockify \
+    keyboard-configuration \
     && apt-get clean
 
 # Preconfigure the keyboard layout to "English (UK)"
-RUN echo "keyboard-configuration keyboard-configuration/layout select English (UK)" | debconf-set-selections
-RUN echo "keyboard-configuration keyboard-configuration/variant select English (UK)" | debconf-set-selections
+RUN echo "keyboard-configuration  keyboard-configuration/layout select English (UK)" | debconf-set-selections \
+    && echo "keyboard-configuration  keyboard-configuration/variant select English (UK)" | debconf-set-selections
+
+# Reconfigure the keyboard-configuration package
+RUN dpkg-reconfigure -f noninteractive keyboard-configuration
 
 # Set the locale
 ENV LANG C.UTF-8
